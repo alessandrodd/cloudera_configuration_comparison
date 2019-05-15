@@ -98,7 +98,11 @@ for service in services:
     if r.status_code != 200 and r.status_code != 404:
         print("ERROR: return code " + str(r.status_code) + " for " + full_url_a)
         continue
-    data = r.json()
+    elif r.status_code == 404:
+        print("WARN: return code " + str(r.status_code) + " for " + full_url_a)
+        data = {}
+    else:
+        data = r.json()
     for item in data["items"]:
         cfg_groups.add(item["name"])
     full_url_b = url_b+service+"/roleConfigGroups"
@@ -106,7 +110,11 @@ for service in services:
     if r.status_code != 200 and r.status_code != 404:
         print("ERROR: return code " + str(r.status_code) + " for " + full_url_b)
         continue
-    data = r.json()
+    elif r.status_code == 404:
+        print("WARN: return code " + str(r.status_code) + " for " + full_url_b)
+        data = {}
+    else:
+        data = r.json()
     for item in data["items"]:
         cfg_groups.add(item["name"])
 
